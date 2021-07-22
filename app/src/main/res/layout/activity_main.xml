@@ -37,11 +37,12 @@
 
         </LinearLayout>
 
-        <Button
+        <ToggleButton
             android:id="@+id/btnMusic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MUSIC OFF" />
+            android:textOn="Music On"
+            android:textOff="Music Off"/>
 
     </LinearLayout>
 

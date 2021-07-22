@@ -20,7 +20,7 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyFolder", "music.mp3");
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Music", "music.mp3");
 
             // specify the path of the audio file
             player.setDataSource(file.getPath());

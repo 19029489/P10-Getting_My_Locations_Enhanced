@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -27,7 +29,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
@@ -36,10 +41,9 @@ import java.io.FileWriter;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnStart, btnStop, btnCheck, btnMusic;
+    Button btnStart, btnStop, btnCheck;
+    ToggleButton btnMusic;
     TextView tvLat, tvLng;
-
-    Boolean started;
 
     LatLng poi_current;
 
@@ -101,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(poi_current, 15));
 
+                            Marker marker = map.addMarker(new MarkerOptions()
+                                    .position(poi_current)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+
                             UiSettings ui = map.getUiSettings();
 
                             ui.setCompassEnabled(false);
@@ -147,6 +155,10 @@ public class MainActivity extends AppCompatActivity {
                     poi_current = new LatLng(lat, lng);
                     map.clear();
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(poi_current, 15));
+
+                    Marker marker = map.addMarker(new MarkerOptions()
+                            .position(poi_current)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
                     try {
                         folderLocation = getFilesDir().getAbsolutePath() + "/MyFolder";
@@ -209,15 +221,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnMusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (started == false){
-                    started = true;
-                    btnMusic.setText("Music Off");
+        btnMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
                     startService(new Intent(MainActivity.this, MyService.class));
                 } else {
-                    btnMusic.setText("Music On");
+                    // The toggle is disabled
                     stopService(new Intent(MainActivity.this, MyService.class));
                 }
             }

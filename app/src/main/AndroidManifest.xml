@@ -15,10 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P10GettingMyLocationsEnhanced">
+        <activity android:name=".LocationsActivity"></activity>
+
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
