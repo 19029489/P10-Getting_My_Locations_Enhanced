@@ -86,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //another way to check permissions
                 if (checkPermission() == false){
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},0);
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},0);
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},0);
                     Log.e("GMap - Permission", "GPS access has not been granted");
                     return;
                 }
@@ -138,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
 
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(30000);
-        mLocationRequest.setSmallestDisplacement(50);
+        mLocationRequest.setInterval(5000);
+        mLocationRequest.setSmallestDisplacement(0);
 
         LocationCallback mLocationCallback = new LocationCallback() {
             @Override
@@ -180,14 +179,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (checkPermission() == true){
-
                     client.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
 
                 } else {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},0);
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},0);
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},0);
+//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},0);
 
-                    return;
+//                    return;
                 }
             }
         });
@@ -216,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, LocationsActivity.class);
-//                startActivity(i);
+                Intent i = new Intent(MainActivity.this, LocationsActivity.class);
+                startActivity(i);
             }
         });
 
@@ -241,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         int permissionCheck_Fine = ContextCompat.checkSelfPermission(
                 MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (permissionCheck_Coarse == PermissionChecker.PERMISSION_GRANTED || permissionCheck_Fine == PermissionChecker.PERMISSION_GRANTED) {
+        if (permissionCheck_Coarse == PermissionChecker.PERMISSION_GRANTED && permissionCheck_Fine == PermissionChecker.PERMISSION_GRANTED) {
             return true;
         } else {
             return false;
