@@ -18,10 +18,18 @@
             android:layout_height="wrap_content"
             android:text="Refresh" />
 
+        <Button
+            android:id="@+id/btnFavourites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Favourites" />
+
         <TextView
             android:id="@+id/tvNum"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp" />
 
     </LinearLayout>
 
